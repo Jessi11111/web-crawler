@@ -1,0 +1,27 @@
+1. Classification Approach
+target attribute could be:
+
+(a) Silhouette Classification
+Target Attribute: silhouette (e.g., Ballgown, A-Line, Flare, Sheath)
+Use Case: Predicting the silhouette of a dress based on other features like neckline, fabric, and embellishments.
+(b) Occasion-Based Classification
+Target Attribute: occasion (e.g., Wedding, Evening, Casual, Prom)
+Use Case: Identifying the best occasion for a dress based on attributes like fabric, length, and embellishments.
+(c) Brand/Designer Classification
+Target Attribute: brand (e.g., Vera Wang, Pronovias, Allure, Martina Liana)
+Use Case: Classifying dresses by brand based on their styling characteristics.
+
+
+
+
+
+
+2. Regression Approach
+analyzing trends and predicting numerical values, possible target attributes include:
+
+(a) Price Prediction
+Target Attribute: price
+Use Case: Predicting the price of a wedding dress based on fabric, silhouette, designer, and embellishments.
+(b) Popularity Score
+Target Attribute: popularity (e.g., review count, sales data, rating score)
+Use Case: Identifying which dress attributes contribute to higher customer preference.
