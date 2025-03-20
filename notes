@@ -1,0 +1,79 @@
+>>How to reset my WSL Ubuntu password?
+
+
+I had the same problem. The first comment by @Ramhound solved it for me.
+
+In the terminal outside of WSL:
+
+Run wsl -u root
+Note: If you have more than one distribution then run wsl -d <your-distro-name> -u root instead of wsl -u root. with this command, you can choose a specific one. Replace <your-distro-name> with your distro name (For example: Ubuntu-22.04)
+
+Run passwd <username>
+
+Enter new password
+
+
+
+
+>> MongoDB
+
+1.Using the Mongo Shell:
+
+If you prefer the command line, you can use the MongoDB shell inside your running container.
+
+Run Mongo Shell
+bash:
+docker exec -it mongodb_container mongosh -u root -p example --authenticationDatabase admin
+
+List Databases:
+show dbs
+
+Use a Database:
+use mydatabase
+
+Show Collections:
+show collections
+
+Query Data:
+db.mycollection.find().pretty()
+
+
+2.Using MongoDB Compass (Best for Local GUI)
+MongoDB Compass is an official desktop application for managing and visualizing MongoDB.
+    Download MongoDB Compass from web.
+    Open MongoDB Compass and connect using this URI:
+      mongodb://localhost:27017/
+    Click "Connect" to explore and manage your database.
+
+
+
+
+>> python function:
+The variable inside the parentheses (eg:collection) is a parameter. When the function is called, an actual value (an argument) is passed to this parameter
+the collection parameter should be:
+✅ A MongoDB collection (if working with MongoDB).
+✅ A list of data (if processing multiple items).
+✅ A dictionary (if passing structured data).
+✅ Any other data structure relevant to the function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
