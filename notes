@@ -58,8 +58,15 @@ the collection parameter should be:
 
 
 
-
-
+1.for Loop
+Used when you know how many times you need to loop.
+Iterates over a sequence (list, tuple, dictionary, range, etc.).
+2. while Loop
+Used when you don’t know how many times the loop will run.
+Runs until a condition becomes false.
+while
+    if 00=00 
+        break
 
 
 
