@@ -1,0 +1,5 @@
+1.Lazy loading means content loads dynamically when you scroll. To fix this:
+1️⃣ Use Selenium to scroll down the page until all elements are loaded.
+2️⃣ Extract the final rendered HTML and parse it with BeautifulSoup.
+
+
