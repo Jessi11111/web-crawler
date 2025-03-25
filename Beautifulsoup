@@ -1,0 +1,36 @@
+1.BeautifulSoup + Requests for Basic HTML Scraping
+This combination is perfect for scraping static HTML pages (pages where all content loads with the initial HTML).
+
+#Requests - Gets the webpage content
+import requests
+response = requests.get('https://example.com')
+html_content = response.text
+
+#BeautifulSoup - Parses and extracts data from HTML
+from bs4 import BeautifulSoup
+soup = BeautifulSoup(html_content, 'html.parser')
+
+pros and cons:
+
+✔ Lightweight - No browser automation overhead
+✖ No JavaScript - Can't handle dynamically loaded content
+
+Good For:
+Simple websites with all content in initial HTML
+
+Extracting:
+
+Text content
+
+Links (<a> tags)
+
+Tables
+
+Basic structured data
+
+Not Good For:
+Websites that load content via JavaScript
+
+Pages requiring login (unless simple form submission)
+
+Interactive web applications
