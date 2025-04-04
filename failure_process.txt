@@ -1,0 +1,92 @@
+1. frist, tried throw plp links to LLM by setting up the prompt to get the pdp links output in json file. I modified lots of prompt version. no one worked.
+PLP_PROMPT = """Analyze the plp_content(html) above and extract **ALL** valid Product Detail Page (PDP) URLs.  
+
+        ### Definitions:
+        - **PDP (Product Detail Page)**: 
+        A URL linking to a *specific product* with:
+        1. Base path: `/brand/wedding-dresses/`
+        2. Contains either:
+            - A product ID (e.g., `/88415/`)
+            - A product name slug (e.g., `/ballgown-dress/`)
+        3. *May include* `?plp_url=...` or other query parameters.
+
+        ### Rules:
+        1. **Include ONLY URLs** matching ALL these criteria:
+        - Domain: 'https://www.allurebridals.com', 'https://www.essensedesigns.com', 'https://www.maggiesottero.com','https://justinalexander.com'
+        - Structure: Has a product ID or name (e.g., `/88415/` or `/ballgown-dress/`)
+        - Examples:
+            ✅ `https://justinalexander.com/justin-alexander/wedding-dresses/88415/?plp_url=...`
+            ✅ `https://justinalexander.com/justin-alexander/wedding-dresses/ballgown-dress/`
+            ❌ `https://justinalexander.com/justin-alexander/wedding-dresses/` (PLP, not PDP)
+            ❌ `https://justinalexander.com/cart/` (non-product page)
+
+        2. **Exclude**:
+        - Duplicates, filters, or non-product links.
+        - URLs without a product ID/name in the path.
+
+        3. **Return JSON** (no other text):
+        ```json
+        {{"pdp_links": ["url1", "url2"]}} 
+        Content: {plp_content}"""
+
+
+failed because LLM can process links like a browser. we need to feed LLM at least some data in order to extract data.
+
+2. use crawl4ai to process plp links to get pdp links ( use reasult.link() ). Important: those result.link needed clean and pattern match. 
+And then use crawl4ai to process each pdp link to get some result( either result.markdown, result.cleaned_html, result_extracted_content )
+And then throw those results to LLM to extract info that we need. For example:
+    "id": "product_id",
+    "Name": "product_name",
+    "Description": "product_description",
+    "crawl_date": "YYYY-MM-DD HH:MM:SS"
+
+
+failed (reason unknown)
+2025-04-04 15:29:40,601 - ERROR - Error processing PDP https://www.justinalexander.com/justin-alexander/wedding-dresses/88334/?plp_url=/justin-alexander/wedding-dresses/: BrowserType.launch: Target page, context or browser has been closed
+
+potential cause:
+          Resource Management Issues   -->???
+          Timeout Issues               --> fix some config
+          Memory/Resource Exhaustion   --> divide the pdp links into smaller batch, batch_size = 5
+
+3. I tried put all pdp links to mongo collection that i new started under the database competitors
+ pdp links in mongodb:
+        _id:67f034621a4a39537c8097b9
+        url:"https://www.justinalexander.com/justin-alexander/wedding-dresses/88365…"
+        found_date:"2025-04-04 14:34:58"
+        status:"pending"
+        first_found:"2025-04-04 14:34:58"
+and retrieve pdp links collections from mongo, then throw those into crawl4ai???
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
