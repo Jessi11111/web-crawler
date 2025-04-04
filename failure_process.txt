@@ -31,8 +31,10 @@ PLP_PROMPT = """Analyze the plp_content(html) above and extract **ALL** valid Pr
 
 
 failed because LLM can process links like a browser. we need to feed LLM at least some data in order to extract data.
+..............................................................................................................................................................................................................................
 
-2. use crawl4ai to process plp links to get pdp links ( use reasult.link() ). Important: those result.link needed clean and pattern match. 
+
+2. use crawl4ai to process plp links to get pdp links ( use reasult.link() ). Important: those result.link needed clean and pattern match. I did it!!! At least for the lazy load plp page. I got 150 pdp links from Justin.
 And then use crawl4ai to process each pdp link to get some result( either result.markdown, result.cleaned_html, result_extracted_content )
 And then throw those results to LLM to extract info that we need. For example:
     "id": "product_id",
@@ -48,6 +50,16 @@ potential cause:
           Resource Management Issues   -->???
           Timeout Issues               --> fix some config
           Memory/Resource Exhaustion   --> divide the pdp links into smaller batch, batch_size = 5
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>> OKAYYYY!!!  LOL 
+this error is caused by Crawl4ai!!!
+----------------------------------------------------------------------------------
+aravindkarnam 3 days ago Collaborator
+@LLazzar @JohayerChowdury Yes. This issue was already reported in #842 . It's already root caused and patched. Will be released shortly. Closing this issue as duplicate, so that progress can be tracked in a single issue on #842.
+-----------------------------------------------------------------------------------
+................................................................................................................................................................................................................................
+
 
 3. I tried put all pdp links to mongo collection that i new started under the database competitors
  pdp links in mongodb:
