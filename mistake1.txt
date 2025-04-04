@@ -1,0 +1,25 @@
+2025-04-04 11:41:29,235 - INFO - Processing PDP URL: https://www.justinalexander.com/justin-alexander/wedding-dresses/88203/?plp_url=/justin-alexander/wedding-dresses/
+2025-04-04 11:41:29,312 - ERROR - Error processing PDP https://www.justinalexander.com/justin-alexander/wedding-dresses/88203/?plp_url=/justin-alexander/wedding-dresses/: BrowserType.launch: Target page, context or browser has been closed
+
+
+1.Error Type: BrowserType.launch: Target page, context or browser has been closed
+This indicates the browser instance was closed before the operation completed
+2.Root Causes:   async with AsyncWebCrawler(config=browser_config) as crawler:
+       pdp_result = await crawler.arun(url=pdp_url, config=crawler_config)
+The browser is being closed too early because:
+The context manager (async with) is closing the browser
+Multiple URLs are being processed with the same browser instance
+3.Solution:
+  a.Separate Browser Instances:
+  Main crawler for PLP pages
+  Individual crawler for each PDP page
+  b.Improved Resource Management:   # Main crawler for PLP pages
+   async with AsyncWebCrawler(config=browser_config) as main_crawler:
+       # New crawler for each PDP
+       async with AsyncWebCrawler(config=browser_config) as pdp_crawler:
+  c.Consistent Configuration:
+  Moved configurations outside the loops
+  Same settings for all crawlers
+  d.Better Error Isolation:
+  Each PDP has its own browser instance
+  Failures don't affect other pages
