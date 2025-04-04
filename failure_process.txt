@@ -30,7 +30,7 @@ PLP_PROMPT = """Analyze the plp_content(html) above and extract **ALL** valid Pr
         Content: {plp_content}"""
 
 
-failed because LLM can process links like a browser. we need to feed LLM at least some data in order to extract data.
+failed because LLM can't process links like a browser. we need to feed LLM at least some data in order to extract data.
 ..............................................................................................................................................................................................................................
 
 
