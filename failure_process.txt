@@ -61,20 +61,67 @@ aravindkarnam 3 days ago Collaborator
 ................................................................................................................................................................................................................................
 
 
-3. I tried put all pdp links to mongo collection that i new started under the database competitors
+3. I tried put all pdp links to mongo collection that i new started under the database competitors to store partial data that we had now
  pdp links in mongodb:
         _id:67f034621a4a39537c8097b9
         url:"https://www.justinalexander.com/justin-alexander/wedding-dresses/88365…"
         found_date:"2025-04-04 14:34:58"
         status:"pending"
         first_found:"2025-04-04 14:34:58"
-and retrieve pdp links collections from mongo, then throw those into crawl4ai???
 
 
 
+4. use crawl4ai again, had this error caused by crawl4ai:BrowserType.launch: Target page, context or browser has been closed
+fixed refers to link:https://github.com/unclecode/crawl4ai/issues/842#issuecomment-2778772791
+-------------------
+Solution
+We modified the close() method in the AsyncPlaywrightCrawlerStrategy class to reset the Playwright instance after cleanup:
+from crawl4ai.async_crawler_strategy import AsyncPlaywrightCrawlerStrategy
+from crawl4ai.browser_manager import BrowserManager
+
+
+async def patched_async_playwright__crawler_strategy_close(self) -> None:
+    """
+    Close the browser and clean up resources.
+
+    This patch addresses an issue with Playwright instance cleanup where the static instance
+    wasn't being properly reset, leading to issues with multiple crawls.
+
+    Issue: https://github.com/unclecode/crawl4ai/issues/842
+
+    Returns:
+        None
+    """
+    await self.browser_manager.close()
+
+    # Reset the static Playwright instance
+    BrowserManager._playwright_instance = None
+AsyncPlaywrightCrawlerStrategy.close = patched_async_playwright__crawler_strategy_close
+------------------------
+
+
+5. still have error with the result.
+three attribututes of result:
+                                 logger.info("=== Content Types Available ===")
+                                logger.info(f"Has markdown: {hasattr(pdp_result, 'markdown')}")
+                                logger.info(f"Has cleaned_html: {hasattr(pdp_result, 'cleaned_html')}")
+                                logger.info(f"Has extracted_content: {hasattr(pdp_result, 'extracted_content')}")
+the extracted_content si what i want. 
+but result.extracted_content is base on JsonCssExtractionStrategy
+
+A JSON-based extraction strategy refers to a structured way of extracting data from web pages (or raw HTML) by defining a schema (a set of rules) in JSON format. This schema tells the crawler what to extract (e.g., product titles, prices, descriptions) and how to extract it (using CSS selectors, XPath, or LLM-based parsing).
+
+The extracted data is then stored in result.extracted_content as a JSON string (or sometimes plain text) rather than in markdown (result.markdown).
 
 
 
+6. fixed by adding schema and fix the strategy type.
+from crawl4ai.extraction_strategy import JsonCssExtractionStrategy
+extraction_strategy=JsonCssExtractionStrategy(WEDDING_DRESS_SCHEMA)
+extracted_data = json.loads(pdp_result.extracted_content)
+
+
+finally worked!!!
 
 
 
