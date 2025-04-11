@@ -4,7 +4,7 @@
                 scan_full_page=True,  # true:Scans the entire page, including content that requires scrolling (e.g., lazy-loaded images, infinite scroll sections, with "Load More" buttons)
                 scroll_delay=2.0,  # Increased from 0.5 to 2.0 seconds
                 cache_mode=CacheMode.ENABLED, #cache_mode=CacheMode.BYPASS - Never reuses cached resources
-                verbose=True,
+                verbose=True, #enables detailed logging of the crawling process, useful for debugging and monitoring. 1.Process Tracking 2. Error Visibility 3. Performance Metrics. Example: [TIME] Page load: 1.4s | Extraction: 0.2s
                 page_timeout=180000,
                 word_count_threshold=1, #Extracts every text element containing at least 1 word
             )
@@ -16,5 +16,5 @@
                 viewport_height=1080,
                 ignore_https_errors=True,  # Ignore SSL certificate errors
                 # block_resources=["image", "media", "font"]  # this block images and other heavy resources, but it's not supported by crawl4ai
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"  # Set a realistic user agent
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"  #Mozilla/5.0	Always included	Legacy compatibility. AppleWebKit/537.36	Rendering engine. (KHTML, like Gecko)	Engine compatibility
             )
