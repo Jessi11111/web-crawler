@@ -121,7 +121,72 @@ extraction_strategy=JsonCssExtractionStrategy(WEDDING_DRESS_SCHEMA)
 extracted_data = json.loads(pdp_result.extracted_content)
 
 
-finally worked!!!
+finally worked!!! 04/08/25
+
+
+
+
+
+7.crashed again~~ 04/11/25
+---------------------------------------------------------
+find out our proxy ran out of bandwidth.
+
+ we exhausted the allocated data transfer limit provided by your proxy service for a given period (usually monthly)
+---------------------------------------------------------
+andwidth Limit Reached – Proxy services often impose a cap on how much data can pass through their servers. Once you exceed this limit, the proxy will stop working until the next billing cycle or until you purchase additional bandwidth. we reached 5/5 gb
+========================================
+PROXY_USER = os.environ.get('PROXY_USER', 'web_crawler_gOE9S')
+PROXY_PASS = os.environ.get('PROXY_PASS', 'Decrease_Subtotal6_Stencil')
+PROXY_SERVER = f"http://customer-{PROXY_USER}-cc-us-sessid-0821780918-sesstime-10:{PROXY_PASS}@pr.oxylabs.io:7777"
+
+browser_config = BrowserConfig(
+                headless=True,
+                proxy=PROXY_SERVER,
+                ...
+
+solution: added more GB. Now added to 20GB.
+it worked with some at least!!!
+
+
+8.
+some of the pdp links doesn't work
+error
+-----------------------------------------------------------------------------------------------------------------------------
+Unexpected error in _crawl_web at line 582 in _crawl_web (lib/python3.10/site-                                      │
+│ packages/crawl4ai/async_crawler_strategy.py):                                                                         │
+│   Error: Failed on navigating ACS-GOTO:                                                                               │
+│   Page.goto: net::ERR_TUNNEL_CONNECTION_FAILED at https://www.justinalexander.com/justin-alexander/wedding-           │
+│ dresses/88261PS/?plp_url=/justin-alexander/wedding-dresses/                                                           │
+│   Call log:                                                                                                           │
+│   - navigating to "https://www.justinalexander.com/justin-alexander/wedding-dresses/88261PS/?plp_url=/justin-         │
+│ alexander/wedding-dresses/", waiting until "domcontentloaded"                                                         │
+│                                                                                                                       │
+│                                                                                                                       │
+│   Code context:                                                                                                       │
+│   577                       response = await page.goto(                                                               │
+│   578                           url, wait_until=config.wait_until, timeout=config.page_timeout                        │
+│   579                       )                                                                                         │
+│   580                       redirected_url = page.url                                                                 │
+│   581                   except Error as e:                                                                            │
+│   582 →                     raise RuntimeError(f"Failed on navigating ACS-GOTO:\n{str(e)}")                           │
+│   583                                                                                                                 │
+│   584                   await self.execute_hook(                                                                      │
+│   585                       "after_goto", page, context=context, url=url, response=response, config=config            │
+│   586                   )                                                                                             │
+│   587                                             
+--------------------------------------------------------------------------------------------------------------------------------
+from github(crawl4ai develpoer):This is not a crawl4AI issue. Sometimes the IP addresses of these proxy providers are blocked by firewalls. Even I faced this exact issue when I connect through my office network, but from my home network or mobile hotspot the proxy connection works fine. Change your network or change the protocol to https://, and see if the issue gets resolved.
+
+issue: proxy provider are blocked by firewalls
+
+
+
+
+
+
+
+
+
 
 
 
