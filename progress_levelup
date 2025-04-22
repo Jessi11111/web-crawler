@@ -1,0 +1,94 @@
+try use LLMExtractionStrategy()
+
+error1:
+
+2025-04-22 15:30:14,371 - ERROR - LLM extraction error for https://www.justinalexander.com/justin-alexander/wedding-dresses/88153/?plp_url=/justin-alexander/wedding-dresses/: litellm.APIConnectionError: 'name'
+The litellm.APIConnectionError: 'name' suggests that your application couldn't connect to the Ollama instance running at http://192.168.100.150:11434.
+
+
+what's the reason the output json is not the same as my schema Dress class ?
+after i fix the litellm issue, the output json will be the same as my define schema?
+Yes, that's exactly the issue. Your JSON output doesn't match your Dress schema because you're getting an error response from the LLM service instead of actual extracted data.
+The error JSON you're seeing ({"index": 0, "error": true, "tags": ["error"], "content": "error message"}) is an error response format from the extraction process, not your schema data.
+Once you fix the litellm connection issue with Ollama, the output should match your Dress schema with:
+{
+  "name": "Wedding Dress Name",
+  "description": "Detailed description of the dress",
+  "url": "https://example.com/product-page"
+}
+The litellm error is preventing the LLM from properly processing your extraction request, so instead of getting data that matches your schema, you're getting error responses. Fix the connection to your local Ollama server, and the extraction should work as expected with the correct schema.
+-----------------------------
+fixed my check the litellm supported model. deepseek-v2 is in it. but deepseek-r1 is not.
+
+
+
+
+
+
+
+
+
+
+error2: (this version is fine, logic no problem, modify as needed) 
+
+
+2025-04-22 16:57:10,079 - INFO - PDP Link 1: https://www.maggiesottero.com/maggie-sottero/camille/19617
+2025-04-22 16:57:10,079 - INFO - PDP Link 2: https://www.maggiesottero.com/maggie-sottero/jace/19639
+2025-04-22 16:57:10,079 - INFO - PDP Link 3: https://www.maggiesottero.com/maggie-sottero/anniston-marie-leigh/19372
+2025-04-22 16:57:10,254 - INFO - Processing PDP URL: https://www.justinalexander.com/justin-alexander/wedding-dresses/88381PS/?plp_url=/justin-alexander/wedding-dresses/
+2025-04-22 16:57:10,255 - INFO - === Starting PDP Data Extraction for https://www.justinalexander.com/justin-alexander/wedding-dresses/88381PS/?plp_url=/justin-alexander/wedding-dresses/ ===
+
+logic happens here in my code:
+# Stage 1: Extract and store PDP links
+    for url in URLs:
+        logger.info(f"Processing PLP URL: {url}")
+        await extract_pdp_links(url)
+
+    # Stage 2: Extract data from stored PDP links
+    pending_links = collection.find({"status": "pending"})
+    for link in pending_links:
+        url = link["url"]
+        logger.info(f"Processing PDP URL: {url}")
+
+
+
+
+
+
+
+
+error3:
+
+2025-04-22 17:07:13,683 - INFO - LLM extracted content for https://www.justinalexander.com/justin-alexander/wedding-dresses/88381PS/?plp_url=/justin-alexander/wedding-dresses/:
+[]
+2025-04-22 17:07:13,684 - INFO - Parsed LLM output for https://www.justinalexander.com/justin-alexander/wedding-dresses/88381PS/?plp_url=/justin-alexander/wedding-dresses/:
+[]
+
+=== Token Usage Summary ===
+Type                   Count
+------------------------------
+Completion                 0
+Prompt                     0
+Total                      0
+
+=== Usage History ===
+Request #    Completion       Prompt        Total
+
+
+The reason you're not seeing any JSON output is because the LLM extraction returned an empty array ([]) instead of actual dress data. 
+This indicates that:
+The crawler successfully connected to the page
+The Ollama LLM connection was established
+But NO tokens were used (0 prompt tokens, 0 completion tokens)
+This strongly suggests that either:
+The page content wasn't properly extracted (possibly due to JavaScript rendering issues)
+The extracted content was empty or too small to process
+The Ollama model received the request but returned empty results
+The empty result isn't a typical error response - it's just empty data. Your code is handling it correctly by validating if data exists before trying to use it, but the root issue is that no extraction is happening.
+Try checking if your Ollama model is running correctly and consider adjusting the crawler parameters to ensure content is properly loaded before extraction.
+
+
+
+
+
+
