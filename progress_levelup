@@ -92,3 +92,52 @@ Try checking if your Ollama model is running correctly and consider adjusting th
 
 
 
+
+
+
+error4:
+"content": "litellm.APIConnectionError: 'name'
+"content": "litellm.APIConnectionError: OllamaException - {\"error\":\"an error was encountered while running the model: unexpected EOF\"}"
+
+
+"Unexpected EOF" typically means:
+EOF: End Of File
+The model crashed or terminated unexpectedly
+There was a connection interruption
+The model might have run out of memory or encountered another runtime error
+This could be caused by:
+An issue with the specific model being used
+resource constraints on the Ollama server
+A problematic input that caused the model to fail
+
+
+debug1:
+(Artemis) jking@DESKTOP-0VKC8HD:/mnt/c/Users/Jessi King/Documents/Artemis$ curl http://192.168.100.150:11434/api/generate -d '{
+  "model": "deepseek-v2:latest",
+  "prompt": "Hello world",
+  "stream": false
+}'
+{"model":"deepseek-v2:latest","created_at":"2025-04-24T22:18:39.097917387Z","response":" Hello! How can I help you today? If you have any questions or need assistance, feel free to ask.","done":true,"done_reason":"stop","context":[5726,25,37727,1843,185,185,77398,25,37727,0,1724,481,304,1345,340,3571,30,1273,340,463,688,4313,410,933,10972,11,2213,2094,276,2088,13],"total_duration":8400402037,"load_duration":7589903138,"prompt_eval_count":9,"prompt_eval_duration":342000000,"eval_count":24,"eval_duration":466000000}(Artemis)
+
+
+curl http://192.168.100.150:11434/api/generate -d '{
+  "model": "deepseek-v2",
+  "prompt": "Hello world",
+  "stream": false
+}'
+
+{"model":"deepseek-v2","created_at":"2025-04-24T22:38:23.854719493Z","response":" Hello! I'm an AI assistant designed to provide helpful answers and information. If you have any questions or need assistance, feel free to ask.","done":true,"done_reason":"stop","context":[5726,25,37727,1843,185,185,77398,25,37727,0,304,6,76,274,20838,20308,5405,276,2774,9394,9789,285,1757,13,1273,340,463,688,4313,410,933,10972,11,2213,2094,276,2088,13],"total_duration":13822661991,"load_duration":12820490043,"prompt_eval_count":9,"prompt_eval_duration":357000000,"eval_count":31,"eval_duration":643000000}(Artemis)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
