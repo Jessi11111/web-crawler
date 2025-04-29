@@ -129,6 +129,37 @@ curl http://192.168.100.150:11434/api/generate -d '{
 {"model":"deepseek-v2","created_at":"2025-04-24T22:38:23.854719493Z","response":" Hello! I'm an AI assistant designed to provide helpful answers and information. If you have any questions or need assistance, feel free to ask.","done":true,"done_reason":"stop","context":[5726,25,37727,1843,185,185,77398,25,37727,0,304,6,76,274,20838,20308,5405,276,2774,9394,9789,285,1757,13,1273,340,463,688,4313,410,933,10972,11,2213,2094,276,2088,13],"total_duration":13822661991,"load_duration":12820490043,"prompt_eval_count":9,"prompt_eval_duration":357000000,"eval_count":31,"eval_duration":643000000}(Artemis)
 
 
+debug2:
+$ ollama list
+Command 'ollama' not found, but can be installed with:
+sudo snap install ollama
+$ curl http://192.168.100.150:11434/api/generate -d '{
+  "model": "deepseek-v2",
+  "prompt": "Simply say 'test passed'",
+  "stream": false,
+  "format": "json"
+}'
+{"error":"unexpected EOF"}curl: (3) unmatched close brace/bracket in URL position 48:
+passed",
+  "stream": false,
+  "format": "json"
+}
+
+
+after debug:
+Based on your tests, there appears to be a fundamental issue with your Ollama setup. Let's clarify and fix this:
+
+Ollama Not Installed System-Wide:
+The ollama list command fails because Ollama isn't installed on your host system
+It's only running inside your Docker container
+
+Connection Issues:
+The curl command fails with "unexpected EOF" suggesting either:
+The API endpoint isn't properly exposed from Docker
+There's a networking/firewall issue
+
+Docker Configuration:
+Since you can access Ollama via OpenWebUI in Docker, but not directly via curl, the API port likely isn't properly mapped
 
 
 
