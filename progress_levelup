@@ -133,20 +133,29 @@ debug2:
 $ ollama list
 Command 'ollama' not found, but can be installed with:
 sudo snap install ollama
-$ curl http://192.168.100.150:11434/api/generate -d '{
+$ curl http://localhost:11434/api/generate -d '{
   "model": "deepseek-v2",
-  "prompt": "Simply say 'test passed'",
+  "prompt": "who are you?",
   "stream": false,
   "format": "json"
 }'
-{"error":"unexpected EOF"}curl: (3) unmatched close brace/bracket in URL position 48:
-passed",
-  "stream": false,
-  "format": "json"
-}
+{"model":"deepseek-v2","created_at":"2025-04-29T20:47:59.691282355Z","response":"{\"init_msg\":\"You are communicating with an AI assistant. How can I help you?\"}","done":true,"done_reason":"stop","context":[5726,25,779,418,340,30,185,185,77398,25,19332,3006,62,12411,14462,2054,418,35363,366,274,20838,20308,13,1724,481,304,1345,340,1967,92],"total_duration":540164609,"load_duration":7314835,"prompt_eval_count":11,"prompt_eval_duration":106000000,"eval_count":21,"eval_duration":425000000}(Artemis)
 
 
-after debug:
+
+debug3(llama3.3):
+$ curl http://localhost:11434/api/generate -d '{
+  "model": "llama3.3",
+  "prompt": "Return a JSON object with a \"content\" field containing a sentence about dogs.",
+  "format": "json",
+  "stream": false
+}'
+{"model":"llama3.3","created_at":"2025-04-29T21:02:20.58846326Z","response":"{\"content\": \"Dogs are often considered to be man's best friend.\"}","done":true,"done_reason":"stop","context":[128006,882,128007,271,5715,264,4823,1665,449,264,330,1834,1,2115,8649,264,11914,922,12875,13,128009,128006,78191,128007,271,5018,1834,794,330,35,27403,527,3629,6646,311,387,893,596,1888,4333,1210,92],"total_duration":65821274728,"load_duration":37338478056,"prompt_eval_count":26,"prompt_eval_duration":13961000000,"eval_count":18,"eval_duration":14514000000}(Artemis)
+
+
+
+
+after debug: ?????????????
 Based on your tests, there appears to be a fundamental issue with your Ollama setup. Let's clarify and fix this:
 
 Ollama Not Installed System-Wide:
