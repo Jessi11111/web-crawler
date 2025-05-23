@@ -1,0 +1,5 @@
+error when use deepseek-v2:
+model requires more system memory (391.0 GiB) than is available (153.2 GiB) (status code: 500)
+
+using Gemma3:
+unexpected EOF (status code: -1)
