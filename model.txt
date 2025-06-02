@@ -3,3 +3,21 @@ model requires more system memory (391.0 GiB) than is available (153.2 GiB) (sta
 
 using Gemma3:
 unexpected EOF (status code: -1)
+
+
+How MongoDB Cursor Timeout Affects Classification?
+What Happens?
+
+When you query MongoDB (e.g., db.collection.find()), it returns a cursor (a pointer to the query results).
+
+By default, cursors auto-close after 10 minutes of inactivity (server-side).
+
+If your classification takes too long (e.g., processing large files with Llama3-70B), the cursor expires, and you get:
+
+python
+CursorNotFound: cursor id X not found
+Why After 27 Files?
+
+Likely, processing those files took >10 minutes, triggering the timeout.
+
+The longer each file takes (e.g., due to slow GPU inference), the sooner the cursor dies.
